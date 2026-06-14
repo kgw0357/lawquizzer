@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Quizzer - 민법 조문 및 판례 O/X 학습</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Blur Decorative Elements -->
+    <div class="bg-blur bg-blur-1"></div>
+    <div class="bg-blur bg-blur-2"></div>
+
+    <div class="app-container">
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="logo-area" id="header-logo">
+                <span class="logo-icon">⚖️</span>
+                <span class="logo-text">Law <span class="accent-text">Quizzer</span></span>
+            </div>
+            <div class="user-nav" id="user-nav-area">
+                <span class="user-email-display" id="user-email-display"></span>
+                <button class="nav-btn secondary-btn" id="nav-notes-btn">📚 오답 노트</button>
+                <button class="nav-btn logout-btn" id="logout-btn">로그아웃</button>
+            </div>
+        </header>
+
+        <!-- Main Screen Switcher -->
+        <main class="main-content">
+
+            <!-- 1. AUTH SCREEN (Login / Signup) -->
+            <section id="auth-screen" class="screen-section auth-section">
+                <div class="auth-wrapper">
+                    <div class="glass-panel auth-panel">
+                        <!-- Auth Header -->
+                        <div class="auth-header">
+                            <div class="auth-logo">
+                                <span class="logo-icon-lg">⚖️</span>
+                            </div>
+                            <h1 class="auth-title">Law <span class="accent-text">Quizzer</span></h1>
+                            <p class="auth-subtitle">AI 기반 민법 조문 및 판례 O/X 학습 플랫폼</p>
+                        </div>
+
+                        <!-- Tab Switch -->
+                        <div class="auth-tabs">
+                            <button class="auth-tab active" id="tab-login" data-tab="login">로그인</button>
+                            <button class="auth-tab" id="tab-signup" data-tab="signup">회원가입</button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form id="login-form" class="auth-form">
+                            <div class="input-group">
+                                <label for="login-email">이메일</label>
+                                <input type="email" id="login-email" placeholder="example@email.com" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="login-password">비밀번호</label>
+                                <input type="password" id="login-password" placeholder="비밀번호를 입력하세요" required>
+                            </div>
+                            <button type="submit" class="submit-btn auth-submit-btn">
+                                <span class="btn-text">로그인</span>
+                            </button>
+                            <p class="auth-switch-text">계정이 없으신가요? <a href="#" id="switch-to-signup">회원가입</a></p>
+                        </form>
+
+                        <!-- Signup Form -->
+                        <form id="signup-form" class="auth-form" style="display: none;">
+                            <div class="input-group">
+                                <label for="signup-email">이메일</label>
+                                <input type="email" id="signup-email" placeholder="example@email.com" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="signup-password">비밀번호 (6자 이상)</label>
+                                <input type="password" id="signup-password" placeholder="6자 이상 입력하세요" required minlength="6">
+                            </div>
+                            <div class="input-group">
+                                <label for="signup-password-confirm">비밀번호 확인</label>
+                                <input type="password" id="signup-password-confirm" placeholder="비밀번호를 다시 입력하세요" required>
+                            </div>
+                            <button type="submit" class="submit-btn auth-submit-btn">
+                                <span class="btn-text">회원가입</span>
+                            </button>
+                            <p class="auth-switch-text">이미 계정이 있으신가요? <a href="#" id="switch-to-login">로그인</a></p>
+                        </form>
+                    </div>
+
+                    <!-- Feature Description -->
+                    <div class="auth-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">🤖</span>
+                            <div>
+                                <h4>AI 자동 출제</h4>
+                                <p>Gemini AI가 법령 텍스트를 분석하여 핵심 O/X 문제를 즉시 생성합니다.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📚</span>
+                            <div>
+                                <h4>개인 오답 노트</h4>
+                                <p>틀린 문제는 자동으로 저장되어, 나만의 취약점 리스트를 관리합니다.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <div>
+                                <h4>실시간 해설</h4>
+                                <p>채점 즉시 법적 근거를 포함한 상세 해설을 확인할 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. DASHBOARD SCREEN -->
+            <section id="dashboard-screen" class="screen-section" style="display: none;">
+                <div class="dashboard-grid">
+                    
+                    <!-- Main Action Card -->
+                    <div class="glass-panel main-panel">
+                        <div class="section-header">
+                            <span class="section-badge">학습 시작</span>
+                            <h2 class="panel-title">새 학습 자료 등록</h2>
+                            <p class="panel-desc">공부 중인 민법 조문이나 판례 문단을 입력하세요. AI가 실시간으로 핵심 O/X 문제를 생성합니다.</p>
+                        </div>
+                        
+                        <div class="sample-tags">
+                            <span class="tag-label">빠른 예시 테스트:</span>
+                            <button class="sample-tag" data-type="하자담보책임">🏷️ 하자담보책임</button>
+                            <button class="sample-tag" data-type="증여">🏷️ 증여 계약</button>
+                            <button class="sample-tag" data-type="임대차">🏷️ 임대차 관련</button>
+                        </div>
+                        
+                        <form id="quiz-generate-form">
+                            <div class="textarea-wrapper">
+                                <textarea id="study-text" placeholder="분석할 법학 텍스트를 붙여넣기 하세요... (예: 매도인의 하자담보책임 조문 또는 대법원 판례)" required maxlength="4000"></textarea>
+                                <div class="char-counter"><span id="char-count">0</span> / 4000자</div>
+                            </div>
+                            
+                            <!-- API Key Setting (Accordion Style) -->
+                            <div class="settings-accordion">
+                                <button type="button" class="accordion-trigger" id="api-settings-trigger">
+                                    <span>⚙️ Gemini API 설정 (선택사항)</span>
+                                    <span class="chevron">▼</span>
+                                </button>
+                                <div class="accordion-content" id="api-settings-content">
+                                    <div class="input-group" style="margin-top: 10px;">
+                                        <label for="user-gemini-key">개인 Gemini API Key</label>
+                                        <input type="password" id="user-gemini-key" placeholder="AI 실시간 생성 결과를 원하시면 키를 입력하세요 (미입력시 Mock 모드)">
+                                        <p class="input-tip">입력하신 API 키는 브라우저 로컬 저장소에만 보관됩니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn generate-btn">
+                                <span class="btn-text">🔍 퀴즈 분석 및 자동 생성</span>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Sidebar/History Card -->
+                    <div class="glass-panel sidebar-panel">
+                        <div class="stats-card">
+                            <h3>나의 학습 상태</h3>
+                            <div class="stat-items">
+                                <div class="stat-item">
+                                    <span class="stat-val" id="stats-wrong-count">0</span>
+                                    <span class="stat-lbl">저장된 오답</span>
+                                </div>
+                            </div>
+                            <button class="action-btn-block" id="go-notes-btn">📚 오답노트 전체 보기</button>
+                        </div>
+                        
+                        <div class="info-guide-card">
+                            <h4>💡 Law Quizzer 학습 가이드</h4>
+                            <ul>
+                                <li>학습 자료를 넣으면 AI가 5개의 핵심 논점 문장을 추출합니다.</li>
+                                <li>참(O) / 거짓(X)을 선택하여 법리적 사고를 연마해 보세요.</li>
+                                <li>틀린 문장은 자동으로 오답 노트에 저장되어 언제든 복습할 수 있습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. QUIZ PLAY SCREEN -->
+            <section id="quiz-screen" class="screen-section" style="display: none;">
+                <div class="quiz-container">
+                    <!-- Progress Section -->
+                    <div class="quiz-progress-area">
+                        <button class="quit-btn" id="quiz-quit-btn">✕ 학습 종료</button>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="quiz-progress-fill" style="width: 20%;"></div>
+                        </div>
+                        <span class="progress-text" id="quiz-progress-text">문제 1 / 5</span>
+                    </div>
+
+                    <!-- Quiz Question Card -->
+                    <div class="glass-panel quiz-card" id="quiz-card-panel">
+                        <!-- Floating feedback icon (Circle / Cross) -->
+                        <div class="feedback-indicator" id="feedback-indicator">
+                            <span class="indicator-icon"></span>
+                        </div>
+
+                        <div class="quiz-question-container">
+                            <p class="quiz-question-text" id="quiz-question-text">
+                                매매의 목적물에 하자가 있는 경우, 매수인은 하자를 안 날로부터 6월 내에 계약해제나 손해배상을 청구해야 한다.
+                            </p>
+                        </div>
+
+                        <!-- Answer Buttons -->
+                        <div class="quiz-actions" id="quiz-actions-block">
+                            <button class="choice-btn choice-o" data-answer="O">
+                                <span class="choice-symbol">O</span>
+                                <span class="choice-label">참 (True)</span>
+                            </button>
+                            <button class="choice-btn choice-x" data-answer="X">
+                                <span class="choice-symbol">X</span>
+                                <span class="choice-label">거짓 (False)</span>
+                            </button>
+                        </div>
+
+                        <!-- Feedback Accordion -->
+                        <div class="quiz-feedback-accordion" id="quiz-feedback-accordion" style="display: none;">
+                            <div class="feedback-result-header" id="feedback-result-header">
+                                <span class="status-badge correct-badge">정답입니다!</span>
+                                <span class="correct-answer-display">정답: O</span>
+                            </div>
+                            <div class="feedback-explanation">
+                                <h5>🔍 상세 해설 및 법적 근거</h5>
+                                <p id="feedback-explanation-text">
+                                    민법 제582조에 의하면 매매 목적물 하자에 따른 매수인의 권리 행사 기간은 매수인이 그 사실을 안 날로부터 6개월 이내입니다.
+                                </p>
+                            </div>
+                            <button class="submit-btn next-btn" id="next-question-btn">다음 문제로 이동 ➔</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. QUIZ RESULT MODAL / VIEW -->
+            <section id="quiz-result-screen" class="screen-section" style="display: none;">
+                <div class="quiz-result-card glass-panel">
+                    <div class="result-header">
+                        <span class="trophy-icon">🏆</span>
+                        <h2>학습 완료!</h2>
+                        <p>입력하신 학습 자료에 대한 퀴즈를 모두 마쳤습니다.</p>
+                    </div>
+
+                    <div class="score-display">
+                        <span class="score-num" id="result-score">4</span>
+                        <span class="score-slash">/</span>
+                        <span class="score-total">5</span>
+                    </div>
+                    <p class="score-message" id="result-score-message">훌륭합니다! 대부분의 법리를 명확히 이해하고 계시네요.</p>
+
+                    <div class="result-actions">
+                        <button class="submit-btn" id="result-home-btn">🏠 홈으로 돌아가기</button>
+                        <button class="nav-btn secondary-btn" id="result-notes-btn">📚 오답 노트 보러가기</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. WRONG ANSWER NOTES SCREEN -->
+            <section id="notes-screen" class="screen-section" style="display: none;">
+                <div class="notes-container">
+                    <div class="notes-header">
+                        <div class="header-left">
+                            <button class="back-btn" id="notes-back-btn">⬅ 홈으로</button>
+                            <h2>📚 오답 노트</h2>
+                        </div>
+                        <p class="notes-subtitle">틀렸던 퀴즈를 복습하며 완벽히 이해해 보세요. 마스터한 질문은 제거할 수 있습니다.</p>
+                    </div>
+
+                    <!-- Wrong Notes List -->
+                    <div class="notes-list" id="notes-list-container">
+                        <!-- Example Note Card -->
+                        <div class="note-card glass-panel">
+                            <div class="note-meta">
+                                <span class="note-date">등록일: 2026-06-14</span>
+                                <button class="delete-note-btn">이해함 (삭제)</button>
+                            </div>
+                            <div class="note-question-box">
+                                <span class="question-mark">Q.</span>
+                                <p class="note-question-text">임차인의 과실 없이 임차물이 멸실된 경우에도 차임 감액 청구는 당연히 감액된 것으로 효력이 생긴다.</p>
+                            </div>
+                            <div class="note-answers">
+                                <span class="ans-label incorrect-ans">나의 오답: O</span>
+                                <span class="ans-label correct-ans">실제 정답: X</span>
+                            </div>
+                            <div class="note-explanation-box">
+                                <h5>해설 및 근거</h5>
+                                <p>민법 제627조 제1항에 의하면 임차인은 차임의 감액을 '청구'할 수 있을 뿐이므로, 감액 청구의 의사표시를 해야 비로소 감액됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay" style="display: none;">
+            <div class="spinner-container">
+                <div class="loading-spinner"></div>
+                <p class="loading-text" id="loading-text-msg">AI가 텍스트 분석 및 퀴즈를 생성하고 있습니다...</p>
+            </div>
+        </div>
+
+        <!-- Global Toast Alert -->
+        <div class="toast-alert" id="toast-alert" style="display: none;">
+            <span class="toast-message" id="toast-message-text">오류 메시지</span>
+        </div>
+
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
